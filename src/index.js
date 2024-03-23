@@ -62,7 +62,7 @@ server.get('/api/recetas', async (req, res) => {
   const numberOfElements = results.length;
   // Cerramos la conexion
 
-  conn.close();
+  conn.end();
 
   res.json({ info: { 'count': numberOfElements }, results: results });
 });
@@ -77,7 +77,7 @@ server.get('/api/recetas/:id', async (req, res) => {
 
   const [resultsRecipe] = await conn.query(selectRecipe, [req.params.id]);
 
-  conn.close();
+  conn.end();
 
   res.json({ 'recipes': resultsRecipe });
 });
@@ -110,13 +110,66 @@ server.post('/api/recetas', async (req, res) => {
 
     const idNewRecipe = resultsInsertRecipe.insertId;
 
-    conn.close();
+    conn.end();
 
     res.json({
       success: true,
-      cardURL: `localhost:${port}/api/recetas/${idNewRecipe}`,
+      id: idNewRecipe,
+      //cardURL: `localhost:${port}/api/recetas/${idNewRecipe}`,
     });
   } catch (error) {
+    res.json({
+      succes: false,
+      error: 'Fallo en la bbdd',
+    });
+  }
+});
+
+server.put('/api/recetas/:recipeId', async (req, res) => {
+  try {
+    const conn = await getConnection();
+
+    const updateRecipes = `
+UPDATE recetas 
+SET nombre = ?, ingredientes = ?, instrucciones = ?
+ WHERE id = ?;
+`;
+
+    const [updateRresults] = await conn.execute(updateRecipes, [
+      req.body.nombre,
+      req.body.ingredientes,
+      req.body.instrucciones,
+      req.params.recipeId,
+    ]);
+
+    conn.end();
+
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    res.json({
+      succes: false,
+      error: 'Fallo en la bbdd',
+    });
+  }
+});
+
+server.delete('/api/recetas/:recipeId', async (req, res) => {
+  try {
+    const conn = await getConnection();
+    const deleteRecipes = `DELETE FROM recetas WHERE id = ? `;
+
+    const [deleteResults] = await conn.execute(deleteRecipes, [
+      req.params.recipeId,
+    ]);
+
+    conn.end();
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    // console.log(error);
     res.json({
       succes: false,
       error: 'Fallo en la bbdd',

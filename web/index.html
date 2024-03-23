@@ -4,24 +4,40 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Document</title>
+   <title>Recetario</title>
+   <link rel="stylesheet" href="./styles.scss">
 </head>
 
 <body>
-   <section>
-      <form action="#"> <label for="name">Nombre Receta <input type="text" placeholder="nombre receta"
-               id="name"></label>
-         <label for="ingredients">Ingredientes<input type="text" placeholder="ingredientes" id="ingredients"></label>
-         <label for="instructions">Instruccciones<input type="text" placeholder="instrucciones"
-               id="instructions"></label>
-         <button>Guardar</button>
-      </form>
-   </section>
-   <section>
-      <h2>NOMBRE</h2>
-      <p>Ingredientes</p>
-      <p>Instrucciones</p>
-   </section>
+   <header class="header">
+      <h1 class="header-title">LISTADO DE RECETAS</h1>
+   </header>
+   <main class="main">
+      <section class="first-section-main">
+         <form action="#"> <label for="name">Nombre Receta <input class="ipt-name" type="text"
+                  placeholder="nombre receta" id="name"></label>
+            <label for="ingredients">Ingredientes<input class="ipt-ingredients" type="text" placeholder="ingredientes"
+                  id="ingredients"></label>
+            <label for="instructions">Instruccciones<input class="ipt-instructions" type="text"
+                  placeholder="instrucciones" id="instructions"></label>
+            <button class="button-add">Añadir Receta</button>
+         </form>
+      </section>
+      <section class="second-section-main">
+         <article class="card">
+            <div class="card-text">
+               <h2 class="card-name">NOMBRE</h2>
+               <p class="card-ingredients">Ingredientes</p>
+               <p class="card-instructions">Instrucciones</p>
+            </div>
+            <div class="buttons">
+               <button class="button-change">MODIFICAR</button>
+               <button class="button-delete">ELIMINAR</button>
+            </div>
+         </article>
+      </section>
+   </main>
+   <script type="module" src="./main.js"></script>
 </body>
 
 </html>
