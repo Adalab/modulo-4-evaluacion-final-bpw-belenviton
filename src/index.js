@@ -52,7 +52,7 @@ server.get('/api/recetas', async (req, res) => {
   // Lanzar un SELECT
 
   const queryGetRecipes = `
-  SELECT * FROM recetas_db.recetas;
+  SELECT * FROM recetas;
   `;
 
   // Recuperar los datos
@@ -71,7 +71,7 @@ server.get('/api/recetas/:id', async (req, res) => {
   const conn = await getConnection();
   const selectRecipe = `
    SELECT *
-     FROM recetas_db.recetas
+     FROM recetas
             WHERE id = ?;
      `;
 
