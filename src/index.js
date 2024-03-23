@@ -176,3 +176,6 @@ server.delete('/api/recetas/:recipeId', async (req, res) => {
     });
   }
 });
+
+//servidor estáticos
+server.use(express.static('./public'));
