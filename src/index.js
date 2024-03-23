@@ -8,7 +8,7 @@ const dotenv = require('dotenv').config();
 // CREAR VARIABLES
 
 const server = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 // CONFIGURACIÓN
 
