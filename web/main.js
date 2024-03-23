@@ -46,10 +46,40 @@ const renderAllRecipes = () => {
   }
 };
 
-/* const renderAllRecipes = recipes.map((paintRecipes) => {
-   return createCard(paintRecipes);
- }); */
+const handleCreateRecipe = (event) => {
+  const newName = iptName.value;
+  const newIngredient = iptIngredients.value;
+  const newInstructions = iptInstructions.value;
 
+  fetch('//localhost:4000/api/recetas', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      nombre: newName,
+      ingredientes: newIngredient,
+      instrucciones: newInstructions,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.success) {
+        const newId = recetas.id;
+        const nuevaReceta = {
+          id: newId,
+          nombre: newName,
+          ingredientes: newIngredient,
+          instrucciones: newInstructions,
+        };
+        recetas.push(nuevaReceta);
+        renderAllRecipes();
+        console.log(nuevaReceta);
+      }
+    });
+};
+buttonAdd.addEventListener('click', handleCreateRecipe);
 //AL CARGAR LA PÁGINA
 
 fetch('//localhost:4000/api/recetas')
